@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="CipherClient Copyright Notice" pattern="src[CipherClient.main]:*..*||src[CipherClient.injector]:*..*||src[CipherClient.converter]:*..*" />
+</component>

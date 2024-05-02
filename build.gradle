@@ -1,0 +1,123 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+buildscript {
+    repositories {
+        maven {
+            name = "forge"
+            url = "https://maven.minecraftforge.net"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        maven {
+            name = "Scala CI dependencies"
+            url = "https://repo1.maven.org/maven2/"
+        }
+        maven {
+            name = "jitpack"
+            url = "https://jitpack.io"
+        }
+    }
+    dependencies {
+        classpath 'com.github.GTNewHorizons:ForgeGradle:1.2.13'
+    }
+}
+
+plugins {
+    id 'idea'
+    id 'maven-publish'
+    id 'scala'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+}
+
+apply plugin: 'forge'
+
+version = "0.1"
+group= "fr.crazycat256"
+archivesBaseName = "cipher-client"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "run"
+    replace "@VERSION@", project.version
+}
+
+sourceSets {
+    converter {
+        java {
+            srcDir 'src/converter/java'
+        }
+    }
+    injector {
+        java {
+            srcDir 'src/injector/java'
+        }
+    }
+}
+
+repositories {
+    maven {
+        name = "Overmind forge repo mirror"
+        url = "https://gregtech.overminddl1.com/"
+    }
+}
+
+dependencies {
+    // This must not be used if the client is injected
+    implementation ('net.bytebuddy:byte-buddy-agent:1.14.13') {
+        exclude group: 'org.ow2.asm'
+    }
+}
+
+tasks.register('genInjectorResources', JavaExec) {
+    doFirst {
+        delete 'src/injector/resources'
+        mkdir 'src/injector/resources'
+        copy {
+            from 'src/main/resources'
+            into 'src/injector/resources'
+        }
+    }
+    dependsOn jar
+    main = 'fr.crazycat256.cipherclient.converter.Converter'
+    classpath = sourceSets.converter.runtimeClasspath
+    args = ['build/libs/cipher-client-0.1.jar', 'src/injector/resources/cipher-client.bin']
+}
+
+tasks.register('injectorJar', ShadowJar) {
+    dependsOn genInjectorResources
+    from sourceSets.injector.output
+    archiveClassifier.set('injector')
+    configurations = [project.configurations.injectorResolvableImplementation]
+    manifest {
+        attributes (
+            'Main-Class': 'fr.crazycat256.cipherclient.injector.Attacher',
+            'Agent-Class': 'fr.crazycat256.cipherclient.injector.Agent',
+            'Can-Redefine-Classes': true,
+            'Can-Retransform-Classes': true
+        )
+    }
+}
+
+configurations {
+    injectorImplementation
+    injectorResolvableImplementation.extendsFrom injectorImplementation
+}
+
+dependencies {
+    injectorImplementation 'net.bytebuddy:byte-buddy-agent:1.14.13'
+}
+
+tasks.build.finalizedBy('genInjectorResources', 'injectorJar')
+
+processResources {
+    from (sourceSets.main.resources.srcDirs) {
+        include '**/*.info'
+         expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) { exclude '**/*.info' }
+}
