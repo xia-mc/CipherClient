@@ -44,7 +44,6 @@ public class EntityClientPlayerMPTransformer extends Transformer {
 
     @SuppressWarnings("unused")
     public static void postPreEvent(Object o) {
-        System.out.println("postPreEvent");
         EntityClientPlayerMP player = (EntityClientPlayerMP) o;
         PlayerUpdateEvent event = new PlayerUpdateEvent.Pre(player);
         EventManager.postEvent(event);
@@ -52,7 +51,6 @@ public class EntityClientPlayerMPTransformer extends Transformer {
 
     @SuppressWarnings("unused")
     public static void postPostEvent(Object o) {
-        System.out.println("postPostEvent");
         EntityClientPlayerMP player = (EntityClientPlayerMP) o;
         EventManager.postEvent(new PlayerUpdateEvent.Post(player));
     }
