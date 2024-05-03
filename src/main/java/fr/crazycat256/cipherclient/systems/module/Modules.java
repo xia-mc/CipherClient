@@ -109,6 +109,7 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
 
         // Misc
         add(new CoordLogger());
+        add(new Derp());
         add(new DrawerPeek());
         add(new MiddleClickFriend());
         add(new NBTTooltip());

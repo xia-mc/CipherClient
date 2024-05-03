@@ -16,7 +16,6 @@ import fr.crazycat256.cipherclient.systems.module.Modules;
 import fr.crazycat256.cipherclient.utils.GLUtils;
 import fr.crazycat256.cipherclient.systems.macro.Macros;
 import fr.crazycat256.cipherclient.utils.Utils;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 

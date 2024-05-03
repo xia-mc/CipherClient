@@ -42,6 +42,14 @@ public class ClassTransformer implements ClassFileTransformer {
         ClassNode cn = new ClassNode();
         cr.accept(cn, ClassReader.EXPAND_FRAMES);
 
-        return transformer.getNewClassBytes(cn);
+        try {
+            return transformer.getNewClassBytes(cn);
+        } catch (Exception e) {
+            // Transformers cannot throw exceptions, this is a workaround to do so
+            transformer.throwException(e);
+            System.err.println("Error in transformer " + transformer.getKlass().getName());
+            e.printStackTrace();
+            throw new RuntimeException(e); // This does absolutely nothing
+        }
     }
 }

@@ -78,22 +78,6 @@ public class CombatUtils {
     }
 
 
-    public static float getPitch(EntityLivingBase ent) {
-        double y = (ent.posY + ent.getEyeHeight()) - (mc.thePlayer.posY + mc.thePlayer.getEyeHeight());
-        y /= mc.thePlayer.getDistanceToEntity(ent);
-        double pitch = Math.asin(y) * 57;
-        pitch = -pitch;
-        return (float)pitch;
-    }
-
-    public static float getYaw(EntityLivingBase ent) {
-        double x = ent.posX - mc.thePlayer.posX;
-        double z = ent.posZ - mc.thePlayer.posZ;
-        double yaw = Math.atan2(x, z) * 57;
-        yaw = -yaw;
-        return (float)yaw;
-    }
-
     public static boolean isValid(EntityLivingBase ent) {
         if(ent == null)
             return false;

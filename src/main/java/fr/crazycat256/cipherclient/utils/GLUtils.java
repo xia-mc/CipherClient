@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-import org.lwjgl.util.glu.Sphere;
 
 import java.util.List;
 

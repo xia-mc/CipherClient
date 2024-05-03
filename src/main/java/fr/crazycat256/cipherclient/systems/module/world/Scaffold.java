@@ -85,6 +85,13 @@ public class Scaffold extends Module {
         .build()
     );
 
+    private final Setting<Boolean> rotate = addSetting(new BoolSetting.Builder()
+        .name("rotate")
+        .description("Rotates to the block you're placing")
+        .defaultValue(true)
+        .build()
+    );
+
     private final Setting<Boolean> render = addSetting(new BoolSetting.Builder()
         .name("render")
         .description("Renders the block you're placing")
@@ -106,7 +113,7 @@ public class Scaffold extends Module {
         .name("ahead-distance")
         .description("How far ahead to place blocks")
         .defaultValue(0.0)
-        .min(0)
+        .min(-0.35)
         .max(6)
         .visible(() -> mode.get() == Mode.NORMAL)
         .build()
@@ -242,6 +249,15 @@ public class Scaffold extends Module {
             }
             if (render.get()) {
                 RenderUtils.renderTickingBlock(bp, 15, GLUtils.getColor(128, 104, 254, 255), GLUtils.getColor(64, 104, 254, 255));
+            }
+            if (rotate.get()) {
+                Vec3 dir = PlayerUtils.getMovementVec3();
+                dir.yCoord = 0;
+                if (dir.lengthVector() != 0) {
+                    dir = MathUtils.resize(dir, 0.3);
+                }
+                Vec3 pos = MathUtils.centerOf(bp).addVector(-dir.xCoord, 0, -dir.zCoord);
+                Rotations.rotate(pos, 20);
             }
             return true;
         } else {

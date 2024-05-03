@@ -12,6 +12,7 @@ import fr.crazycat256.cipherclient.events.Handler;
 import fr.crazycat256.cipherclient.gui.settings.*;
 import fr.crazycat256.cipherclient.utils.CombatUtils;
 import fr.crazycat256.cipherclient.systems.module.Category;
+import fr.crazycat256.cipherclient.utils.Rotations;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemSword;
@@ -46,6 +47,13 @@ public class Forcefield extends Module {
         .name("no-swing")
         .description("Disable the swing animation")
         .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> rotate = addSetting(new BoolSetting.Builder()
+        .name("rotate")
+        .description("Rotate to the entity")
+        .defaultValue(true)
         .build()
     );
 
@@ -105,8 +113,10 @@ public class Forcefield extends Module {
                 } else {
                     player.swingItem();
                 }
-
                 player.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK));
+                if (rotate.get()) {
+                    Rotations.lookAt(entity, 1);
+                }
             }
         }
     }

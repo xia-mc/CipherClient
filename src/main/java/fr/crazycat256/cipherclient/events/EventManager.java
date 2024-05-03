@@ -12,6 +12,7 @@ import fr.crazycat256.cipherclient.systems.System;
 import fr.crazycat256.cipherclient.systems.SystemManager;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.utils.RenderUtils;
+import fr.crazycat256.cipherclient.utils.Rotations;
 import fr.crazycat256.cipherclient.utils.ServerUtils;
 
 import static fr.crazycat256.cipherclient.CipherClient.mc;
@@ -48,6 +49,7 @@ public class EventManager {
         listeners.add(new MainListener());
         listeners.add(new ServerUtils());
         listeners.add(new RenderUtils());
+        listeners.add(new Rotations());
 
         // Find all methods with the @Handler annotation
         for (Object o : listeners) {

@@ -13,6 +13,7 @@ import fr.crazycat256.cipherclient.gui.settings.*;
 import fr.crazycat256.cipherclient.utils.CombatUtils;
 import fr.crazycat256.cipherclient.utils.PlayerUtils;
 import fr.crazycat256.cipherclient.systems.module.Category;
+import fr.crazycat256.cipherclient.utils.Rotations;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemSword;
@@ -70,6 +71,13 @@ public class KillAura extends Module {
         .name("no-swing")
         .description("Disable the swing animation")
         .defaultValue(false)
+        .build()
+    );
+
+    private final Setting<Boolean> rotate = addSetting(new BoolSetting.Builder()
+        .name("rotate")
+        .description("Rotate to the target")
+        .defaultValue(true)
         .build()
     );
 
@@ -166,6 +174,9 @@ public class KillAura extends Module {
                 PlayerUtils.sendPositionPacket(player.getPosition(1), false);
             }
             CombatUtils.attack(target, noSwing.get(), true, 0);
+        }
+        if (rotate.get()) {
+            Rotations.lookAt(target, 5);
         }
 
         switchTargets.remove(target);

@@ -5,8 +5,7 @@
 
 package fr.crazycat256.cipherclient.transform;
 
-import fr.crazycat256.cipherclient.transform.transformers.EntityRendererTransformer;
-import fr.crazycat256.cipherclient.transform.transformers.EventBusTransformer;
+import fr.crazycat256.cipherclient.transform.transformers.*;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.instrument.UnmodifiableClassException;
@@ -31,6 +30,7 @@ public class TransformManager {
 
         add(new EventBusTransformer());
         add(new EntityRendererTransformer());
+        add(new EntityClientPlayerMPTransformer());
 
     }
 
@@ -44,7 +44,14 @@ public class TransformManager {
             try {
                 inst.retransformClasses(transformer.getKlass());
             } catch (UnmodifiableClassException e) {
-                System.err.println("Failed to retransform class '" + transformer.getKlass().getName());
+                throw new RuntimeException(e);
+            }
+        }
+
+        for (Transformer transformer : transformers) {
+            if (transformer.getException() != null) {
+                throw new RuntimeException("Error in transformer " + transformer.getClass().getSimpleName()
+                    + " failed to transform " + transformer.getKlass().getName(), transformer.getException());
             }
         }
     }

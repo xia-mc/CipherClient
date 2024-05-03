@@ -21,6 +21,7 @@ import java.util.Arrays;
 public abstract class Transformer implements Opcodes {
 
     private final Class<?> klass;
+    private Exception exception;
 
     private static final boolean MCP = Utils.getMinecraftEnvironment() == Utils.McEnv.MCP;
 
@@ -89,5 +90,13 @@ public abstract class Transformer implements Opcodes {
         }
 
         return mnDesc.equals(transformDesc);
+    }
+
+    public void throwException(Exception e) {
+        this.exception = e;
+    }
+
+    public Exception getException() {
+        return exception;
     }
 }
