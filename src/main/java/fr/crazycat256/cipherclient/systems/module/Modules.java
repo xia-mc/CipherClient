@@ -43,6 +43,7 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
         add(new ChestStealer());
         add(new FastEat());
         add(new NoJumpDelay());
+        add(new NoRotate());
         add(new Regen());
 
 
