@@ -99,7 +99,7 @@ public class WorldUtils {
             }
         } catch (Exception ignored) {}
 
-        if (tileName.startsWith("palamod:") && tileName.contains("chest") && tileEntity.getBlockType() instanceof BlockContainer) {
+        if (tileName.startsWith("palamod:") && tileName.toLowerCase().contains("chest") && tileEntity.getBlockType() instanceof BlockContainer) {
             for (String palaChest : palaChests) {
                 if (tileName.contains(palaChest)) {
                     return TileType.PALA_CHEST;
