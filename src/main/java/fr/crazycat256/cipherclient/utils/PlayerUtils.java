@@ -5,13 +5,17 @@
 
 package fr.crazycat256.cipherclient.utils;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 
+import java.util.List;
+
 import static fr.crazycat256.cipherclient.CipherClient.mc;
+import static java.lang.Math.floor;
 
 public class PlayerUtils {
 
@@ -93,9 +97,32 @@ public class PlayerUtils {
      * @return true if the position is obstructed, false otherwise
      */
     public static boolean isPosObstructed(double x, double y, double z) {
+        List<AxisAlignedBB> collidingBoxes = getCollidingBoxes(x, y, z);
+
+        // We cannot just check if collidingBoxes is empty because the Jesus module can add hitboxes for liquid blocks
+        for (AxisAlignedBB boundingBox : collidingBoxes) {
+            if (boundingBox == null) continue;
+            Vec3i min = new Vec3i(floor(boundingBox.minX), floor(boundingBox.minY), floor(boundingBox.minZ));
+            Block block = mc.theWorld.getBlock(min.x, min.y, min.z);
+            if (block.isBlockSolid(mc.theWorld, min.x, min.y, min.z, 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get the list of colliding bounding boxes at the given position
+     * @param x x coordinate of the position
+     * @param y y coordinate of the position
+     * @param z z coordinate of the position
+     * @return the list of colliding bounding boxes at the given position
+     */
+    @SuppressWarnings("unchecked")
+    public static List<AxisAlignedBB> getCollidingBoxes(double x, double y, double z) {
         double stance = mc.thePlayer.posY - mc.thePlayer.boundingBox.minY;
         AxisAlignedBB box = AxisAlignedBB.getBoundingBox(x - 0.3, y, z - 0.3, x + 0.3, y + stance, z + 0.3);
-        return !mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, box.contract(0.01, 0.01, 0.01)).isEmpty();
+        return (List<AxisAlignedBB>) mc.theWorld.getCollidingBoundingBoxes(mc.thePlayer, box.contract(0.01, 0.01, 0.01));
     }
 
     /**

@@ -80,4 +80,12 @@ public class MathUtils {
         }
         return max;
     }
+
+    public static double mean(double... values) {
+        double sum = 0;
+        for (double value : values) {
+            sum += value;
+        }
+        return sum / values.length;
+    }
 }

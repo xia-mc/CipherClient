@@ -85,6 +85,7 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
         add(new Flight());
         add(new GuiMove());
         add(new HighJump());
+        add(new Jesus());
         add(new NoFall());
         add(new Speed());
         add(new Sneak());

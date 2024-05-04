@@ -31,6 +31,7 @@ public class TransformManager {
         add(new EventBusTransformer());
         add(new EntityRendererTransformer());
         add(new EntityClientPlayerMPTransformer());
+        add(new BlockLiquidTransformer());
 
     }
 

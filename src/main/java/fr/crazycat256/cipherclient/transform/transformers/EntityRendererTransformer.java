@@ -9,7 +9,6 @@ import fr.crazycat256.cipherclient.events.EventManager;
 import fr.crazycat256.cipherclient.events.custom.MouseOverEvent;
 import fr.crazycat256.cipherclient.transform.Transform;
 import fr.crazycat256.cipherclient.transform.Transformer;
-import fr.crazycat256.cipherclient.utils.ASMUtils;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,11 +34,11 @@ public class EntityRendererTransformer extends Transformer {
     /**
      * Replace the method's body by a call to {@link EntityRendererTransformer#getMouseOverTransformed(float)}
      */
-    @Transform(methodName = "getMouseOver", mappedName = "func_78473_a", args = {float.class})
+    @Transform(methodName = "getMouseOver", obfuscatedName = "func_78473_a", args = {float.class})
     private void getMouseOver(MethodNode mn) {
         mn.instructions.clear();
         mn.instructions.add(new VarInsnNode(FLOAD, 1));
-        mn.instructions.add(new MethodInsnNode(INVOKESTATIC, ASMUtils.getPath(EntityRendererTransformer.class), "getMouseOverTransformed", "(F)V", false));
+        mn.instructions.add(new MethodInsnNode(INVOKESTATIC, selfPath, "getMouseOverTransformed", "(F)V", false));
         mn.instructions.add(new InsnNode(RETURN));
     }
 

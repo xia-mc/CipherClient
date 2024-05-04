@@ -22,19 +22,19 @@ public class EntityClientPlayerMPTransformer extends Transformer {
     /**
      * Calls {@link #postPreEvent(Object)} and {@link #postPostEvent(Object)} before and after the method
      */
-    @Transform(methodName = "sendMotionUpdates", mappedName = "func_71166_b")
+    @Transform(methodName = "sendMotionUpdates", obfuscatedName = "func_71166_b")
     private void sendMotionUpdates(MethodNode mn) {
         AbstractInsnNode first = mn.instructions.getFirst();
         AbstractInsnNode last = ASMUtils.getLastReturn(mn);
 
         InsnList pre = new InsnList();
         pre.add(new VarInsnNode(ALOAD, 0));
-        pre.add(new MethodInsnNode(INVOKESTATIC, ASMUtils.getPath(EntityClientPlayerMPTransformer.class), "postPreEvent", "(Ljava/lang/Object;)V", false));
+        pre.add(new MethodInsnNode(INVOKESTATIC, selfPath, "postPreEvent", "(Ljava/lang/Object;)V", false));
 
 
         InsnList post = new InsnList();
         post.add(new VarInsnNode(ALOAD, 0));
-        post.add(new MethodInsnNode(INVOKESTATIC, ASMUtils.getPath(EntityClientPlayerMPTransformer.class), "postPostEvent", "(Ljava/lang/Object;)V", false));
+        post.add(new MethodInsnNode(INVOKESTATIC, selfPath, "postPostEvent", "(Ljava/lang/Object;)V", false));
 
 
         mn.instructions.insertBefore(first, pre);

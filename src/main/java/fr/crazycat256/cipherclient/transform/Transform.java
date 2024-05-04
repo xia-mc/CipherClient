@@ -17,6 +17,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Transform {
     String methodName();
-    String mappedName() default "";
+    String obfuscatedName() default "";
     Class<?>[] args() default {};
 }
