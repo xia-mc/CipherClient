@@ -20,7 +20,7 @@ public class VClipCommand extends Command {
 
             try {
                 Vec3 pos = mc.thePlayer.getPosition(1);
-                int blocks = Integer.parseInt(args[0]);
+                double blocks = Double.parseDouble(args[0]);
                 Vec3 newPos = Vec3.createVectorHelper(pos.xCoord, pos.yCoord + blocks, pos.zCoord);
 
                 mc.thePlayer.setPosition(newPos.xCoord, newPos.yCoord, newPos.zCoord);
