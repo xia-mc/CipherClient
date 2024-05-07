@@ -8,7 +8,7 @@ package fr.crazycat256.cipherclient.systems.module.misc;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.systems.module.Category;
 import fr.crazycat256.cipherclient.events.Handler;
-import fr.crazycat256.cipherclient.utils.Utils;
+import fr.crazycat256.cipherclient.utils.JVMUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +23,7 @@ public class DrawerPeek extends Module {
 
     @Override
     public boolean isWorking() {
-        return Utils.classExists("com.jaquadro.minecraft.storagedrawers.item.ItemDrawers");
+        return JVMUtils.classExists("com.jaquadro.minecraft.storagedrawers.item.ItemDrawers");
     }
 
     @Handler

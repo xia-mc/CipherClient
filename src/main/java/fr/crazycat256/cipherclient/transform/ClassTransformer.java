@@ -25,7 +25,9 @@ public class ClassTransformer implements ClassFileTransformer {
     public ClassTransformer(List<Transformer> transformers) {
         Map<Class<?>, Transformer> map = new HashMap<>();
         for (Transformer transformer : transformers) {
-            map.put(transformer.getKlass(), transformer);
+            for (Class<?> klass : transformer.getClasses()) {
+                map.put(klass, transformer);
+            }
         }
         this.transformers = map;
     }
@@ -43,11 +45,11 @@ public class ClassTransformer implements ClassFileTransformer {
         cr.accept(cn, ClassReader.EXPAND_FRAMES);
 
         try {
-            return transformer.getNewClassBytes(cn);
+            return transformer.getNewClassBytes(classBeingRedefined, cn);
         } catch (Exception e) {
             // Transformers cannot throw exceptions, this is a workaround to do so
-            transformer.throwException(e);
-            System.err.println("Error in transformer " + transformer.getKlass().getName());
+            transformer.throwException(e, classBeingRedefined);
+            System.err.println("Error in transformer " + className);
             throw new RuntimeException(e); // This does absolutely nothing
         }
     }

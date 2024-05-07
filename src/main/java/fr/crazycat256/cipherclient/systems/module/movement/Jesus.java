@@ -7,7 +7,7 @@ package fr.crazycat256.cipherclient.systems.module.movement;
 
 import cpw.mods.fml.common.gameevent.TickEvent;
 import fr.crazycat256.cipherclient.events.Handler;
-import fr.crazycat256.cipherclient.events.custom.LiquidCollisionBoxEvent;
+import fr.crazycat256.cipherclient.events.custom.CollisionBoxEvent;
 import fr.crazycat256.cipherclient.gui.settings.BoolSetting;
 import fr.crazycat256.cipherclient.gui.settings.Setting;
 import fr.crazycat256.cipherclient.systems.module.Category;
@@ -20,6 +20,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.fluids.BlockFluidBase;
 
 import static net.minecraft.realms.RealmsMth.floor;
 
@@ -72,7 +73,7 @@ public class Jesus extends Module {
     }
 
     @Handler
-    private void onLiquidCollisionBox(LiquidCollisionBoxEvent event) {
+    private void onLiquidCollisionBox(CollisionBoxEvent event) {
         if (mc.thePlayer == null || mc.thePlayer.movementInput == null) return;
 
         if (event.y + 1 > PlayerUtils.getFootPos().yCoord) return;
@@ -82,7 +83,7 @@ public class Jesus extends Module {
 
         if (!water.get() && isWater(event.block)) return;
         if (!lava.get() && isLava(event.block)) return;
-        if (other.get() && !isWater(event.block) && !isLava(event.block)) return;
+        if (!other.get() && !isWater(event.block) && !isLava(event.block)) return;
 
         AxisAlignedBB box = AxisAlignedBB.getBoundingBox(event.x, event.y, event.z, event.x + 1, event.y + 1, event.z + 1);
         event.setCollisionBox(box);
@@ -113,7 +114,7 @@ public class Jesus extends Module {
         boolean isTuchingLiquid = false;
         for (Vec3 pos : checkPositions) {
             Block block = mc.theWorld.getBlock(floor(pos.xCoord), floor(pos.yCoord), floor(pos.zCoord));
-            if (block instanceof BlockLiquid) {
+            if (block instanceof BlockLiquid || block instanceof BlockFluidBase) {
                 isTuchingLiquid = (isWater(block) && water.get())
                     || (isLava(block) && lava.get())
                     || (other.get() && !isWater(block) && !isLava(block));
@@ -124,7 +125,8 @@ public class Jesus extends Module {
         }
 
         if (touchingLiquid && !isTuchingLiquid) {
-            mc.thePlayer.motionY = 0.2;
+            mc.thePlayer.motionY = 0.1;
+            mc.thePlayer.fallDistance = 0;
         }
 
         touchingLiquid = isTuchingLiquid;

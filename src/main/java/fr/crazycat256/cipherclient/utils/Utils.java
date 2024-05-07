@@ -17,7 +17,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -50,16 +49,6 @@ public class Utils {
     }
 
     /**
-     * Get a resource as an InputStream
-     * @param path the path to the resource
-     * @return The InputStream of the resource
-     */
-    public static InputStream getResourceAsStream(String path) {
-        ClassLoader cl = CipherClient.isInjected ? ClassLoader.getSystemClassLoader() : Minecraft.class.getClassLoader();
-        return cl.getResourceAsStream(path);
-    }
-
-    /**
      * Get the path to a config file
      * @param name The name of the config file
      * @return The path to the config file
@@ -77,20 +66,6 @@ public class Utils {
             return false;
         }
         return Keyboard.isKeyDown(key);
-    }
-
-    /**
-     * Check if a class exists
-     * @param className The name of the class to check for
-     * @return Whether the class exists
-     */
-    public static boolean classExists(String className) {
-        try {
-            Class.forName(className);
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
     }
 
     /**

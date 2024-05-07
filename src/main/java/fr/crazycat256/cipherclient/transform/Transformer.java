@@ -7,7 +7,6 @@ package fr.crazycat256.cipherclient.transform;
 
 import fr.crazycat256.cipherclient.utils.ASMUtils;
 import fr.crazycat256.cipherclient.utils.Mappings;
-import fr.crazycat256.cipherclient.utils.Utils;
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -23,21 +22,25 @@ import java.util.Arrays;
 public abstract class Transformer implements Opcodes {
 
     protected final String selfPath;
-    private final Class<?> klass;
+    private final Class<?>[] classes;
+
     private Exception exception;
+    private Class<?> exceptionClass;
 
-    private static final boolean MCP = Utils.getMinecraftEnvironment() == Utils.McEnv.MCP;
-
-    public Transformer(Class<?> klass) {
-        this.klass = klass;
+    /**
+     * Creates a new transformer for the specified classes
+     * @param classes the classes to transform, every class must declare all transformed methods
+     */
+    public Transformer(Class<?>... classes) {
+        this.classes = classes;
         this.selfPath = ASMUtils.getPath(this.getClass());
     }
 
-    public Class<?> getKlass() {
-        return klass;
+    public Class<?>[] getClasses() {
+        return classes;
     }
 
-    public byte[] getNewClassBytes(ClassNode cn) {
+    public byte[] getNewClassBytes(Class<?> klass, ClassNode cn) {
 
         for (Method method : this.getClass().getDeclaredMethods()) {
             if (!method.isAnnotationPresent(Transform.class)) {
@@ -53,7 +56,7 @@ public abstract class Transformer implements Opcodes {
 
             MethodNode methodNode = null;
             for (MethodNode mn : cn.methods) {
-                if (areEquals(transform, mn)) {
+                if (areEquals(mn, transform, klass)) {
                     methodNode = mn;
                     break;
                 }
@@ -75,7 +78,7 @@ public abstract class Transformer implements Opcodes {
         return cw.toByteArray();
     }
 
-    private boolean areEquals(Transform transform, MethodNode mn) {
+    private boolean areEquals(MethodNode mn, Transform transform, Class<?> klass) {
         String name = Mappings.getMethodName(klass, transform.methodName(), transform.args());
         if (!mn.name.equals(name)) {
             return false;
@@ -96,11 +99,16 @@ public abstract class Transformer implements Opcodes {
         return mnDesc.equals(transformDesc);
     }
 
-    public void throwException(Exception e) {
+    public void throwException(Exception e, Class<?> klass) {
         this.exception = e;
+        this.exceptionClass = klass;
     }
 
     public Exception getException() {
         return exception;
+    }
+
+    public Class<?> getExceptionClass() {
+        return exceptionClass;
     }
 }

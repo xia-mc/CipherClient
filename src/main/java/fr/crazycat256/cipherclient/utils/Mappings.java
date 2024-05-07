@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Mappings {
 
@@ -37,7 +38,21 @@ public class Mappings {
         if (MCP || !fields.containsKey(klass.getName())) {
             return name;
         }
-        String fieldName = fields.get(klass.getName()).getOrDefault(name, name);
+        //String fieldName = fields.get(klass.getName()).getOrDefault(name, name);
+        Set<Class<?>> classes = JVMUtils.getAllSuper(klass);
+        classes.add(klass);
+        String fieldName = null;
+        for (Class<?> clazz : classes) {
+            if (fields.containsKey(clazz.getName())) {
+                fieldName = fields.get(clazz.getName()).get(name);
+                if (fieldName != null) {
+                    break;
+                }
+            }
+        }
+        if (fieldName == null) {
+            return name;
+        }
         try {
             klass.getDeclaredField(fieldName);
             return fieldName;
@@ -53,11 +68,24 @@ public class Mappings {
      * @return The obfuscated name of the method or the original name if no mapping is found
      */
     public static String getMethodName(Class<?> klass, String name, Class<?>... parameterTypes) {
-        if (MCP || !methods.containsKey(klass.getName())) {
+        if (MCP) {
             return name;
         }
         String methodSig = getMethodSig(name, parameterTypes);
-        String methodName = methods.get(klass.getName()).getOrDefault(methodSig, name);
+        Set<Class<?>> classes = JVMUtils.getAllSuper(klass);
+        classes.add(klass);
+        String methodName = null;
+        for (Class<?> clazz : classes) {
+            if (methods.containsKey(clazz.getName())) {
+                if (methods.get(clazz.getName()).containsKey(methodSig)) {
+                    methodName = methods.get(clazz.getName()).get(methodSig);
+                    break;
+                }
+            }
+        }
+        if (methodName == null) {
+            return name;
+        }
         try {
             klass.getDeclaredMethod(methodName, parameterTypes);
             return methodName;
@@ -82,7 +110,7 @@ public class Mappings {
     }
 
     private static void loadMappings(String path, Map<String, Map<String, String>> map) {
-        try (InputStream is = Utils.getResourceAsStream(path)) {
+        try (InputStream is = JVMUtils.getResourceAsStream(path)) {
 
             InputStreamReader reader = new InputStreamReader(is);
 

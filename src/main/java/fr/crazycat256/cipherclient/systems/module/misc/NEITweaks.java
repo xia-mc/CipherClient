@@ -11,7 +11,7 @@ import fr.crazycat256.cipherclient.events.Handler;
 import fr.crazycat256.cipherclient.gui.settings.BoolSetting;
 import fr.crazycat256.cipherclient.gui.settings.Setting;
 import fr.crazycat256.cipherclient.systems.module.Category;
-import fr.crazycat256.cipherclient.utils.Utils;
+import fr.crazycat256.cipherclient.utils.JVMUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -28,7 +28,7 @@ public class NEITweaks extends Module {
 
     @Override
     public boolean isWorking() {
-        return Utils.classExists("codechicken.nei.guihook.GuiContainerManager");
+        return JVMUtils.classExists("codechicken.nei.guihook.GuiContainerManager");
     }
 
     public final Setting<Boolean> showHidden = addSetting(new BoolSetting.Builder()

@@ -5,6 +5,7 @@
 
 package fr.crazycat256.cipherclient.utils.font;
 
+import fr.crazycat256.cipherclient.utils.JVMUtils;
 import fr.crazycat256.cipherclient.utils.Utils;
 
 import java.awt.*;
@@ -22,7 +23,7 @@ public class Fonts {
 
 	static {
 
-		try (InputStream is = Utils.getResourceAsStream("comfortaa.ttf")) {
+		try (InputStream is = JVMUtils.getResourceAsStream("comfortaa.ttf")) {
 			font = Font.createFont(0, is);
 		} catch (FontFormatException | IOException e) {
 			font = new Font("comfortaa", Font.PLAIN, 100);

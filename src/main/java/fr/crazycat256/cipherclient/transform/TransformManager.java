@@ -31,7 +31,7 @@ public class TransformManager {
         add(new EventBusTransformer());
         add(new EntityRendererTransformer());
         add(new EntityClientPlayerMPTransformer());
-        add(new BlockLiquidTransformer());
+        add(new CollisionsTransformer());
 
     }
 
@@ -43,7 +43,7 @@ public class TransformManager {
 
         for (Transformer transformer : transformers) {
             try {
-                inst.retransformClasses(transformer.getKlass());
+                inst.retransformClasses(transformer.getClasses());
             } catch (UnmodifiableClassException e) {
                 throw new RuntimeException(e);
             }
@@ -52,7 +52,7 @@ public class TransformManager {
         for (Transformer transformer : transformers) {
             if (transformer.getException() != null) {
                 throw new RuntimeException("Error in transformer " + transformer.getClass().getSimpleName()
-                    + " failed to transform " + transformer.getKlass().getName(), transformer.getException());
+                    + " failed to transform " + transformer.getExceptionClass(), transformer.getException());
             }
         }
     }

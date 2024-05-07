@@ -12,6 +12,7 @@ import fr.crazycat256.cipherclient.gui.settings.Setting;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.events.Handler;
 import fr.crazycat256.cipherclient.systems.module.Category;
+import fr.crazycat256.cipherclient.utils.JVMUtils;
 import net.minecraft.inventory.Container;
 
 import java.util.ArrayList;
@@ -32,8 +33,8 @@ public class ChestStealer extends Module {
         net.minecraft.inventory.ContainerBeacon.class,
         net.minecraft.inventory.ContainerRepair.class,
         net.minecraft.inventory.ContainerEnchantment.class,
-        tryGetClass("cpw.mods.ironchest.ContainerIronChest"),
-        tryGetClass("noppes.npcs.containers.ContainerCrate"),
+        JVMUtils.tryGetClass("cpw.mods.ironchest.ContainerIronChest"),
+        JVMUtils.tryGetClass("noppes.npcs.containers.ContainerCrate"),
     };
 
     public ChestStealer() {
@@ -66,7 +67,6 @@ public class ChestStealer extends Module {
         if (mc.inGameHasFocus) {
             return;
         }
-        System.out.println(mc.thePlayer.openContainer.getClass().getName());
         if (Arrays.stream(validChests)
             .filter(Objects::nonNull)
             .noneMatch(klass -> klass.isInstance(mc.thePlayer.openContainer))) {
@@ -97,13 +97,5 @@ public class ChestStealer extends Module {
             }
         }
         return slots;
-    }
-
-    private static Class<?> tryGetClass(String name) {
-        try {
-            return Class.forName(name);
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
     }
 }
