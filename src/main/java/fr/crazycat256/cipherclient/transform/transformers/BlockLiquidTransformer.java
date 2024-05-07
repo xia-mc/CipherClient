@@ -19,7 +19,8 @@ public class BlockLiquidTransformer extends Transformer {
     public BlockLiquidTransformer() {
         super(BlockLiquid.class);
     }
-    @Transform(methodName = "getCollisionBoundingBoxFromPool", obfuscatedName = "func_149668_a", args = {World.class, int.class, int.class, int.class})
+
+    @Transform(methodName = "getCollisionBoundingBoxFromPool", args = {World.class, int.class, int.class, int.class})
     public void isBlockSolid(MethodNode mn) {
         mn.instructions.clear();
         mn.visitVarInsn(ALOAD, 0);

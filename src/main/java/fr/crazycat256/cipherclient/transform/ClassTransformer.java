@@ -48,7 +48,6 @@ public class ClassTransformer implements ClassFileTransformer {
             // Transformers cannot throw exceptions, this is a workaround to do so
             transformer.throwException(e);
             System.err.println("Error in transformer " + transformer.getKlass().getName());
-            e.printStackTrace();
             throw new RuntimeException(e); // This does absolutely nothing
         }
     }

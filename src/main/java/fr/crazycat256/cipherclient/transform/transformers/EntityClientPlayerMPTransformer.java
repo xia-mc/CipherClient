@@ -22,7 +22,7 @@ public class EntityClientPlayerMPTransformer extends Transformer {
     /**
      * Calls {@link #postPreEvent(Object)} and {@link #postPostEvent(Object)} before and after the method
      */
-    @Transform(methodName = "sendMotionUpdates", obfuscatedName = "func_71166_b")
+    @Transform(methodName = "sendMotionUpdates")
     private void sendMotionUpdates(MethodNode mn) {
         AbstractInsnNode first = mn.instructions.getFirst();
         AbstractInsnNode last = ASMUtils.getLastReturn(mn);

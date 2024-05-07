@@ -6,6 +6,7 @@
 package fr.crazycat256.cipherclient.transform;
 
 import fr.crazycat256.cipherclient.utils.ASMUtils;
+import fr.crazycat256.cipherclient.utils.Mappings;
 import fr.crazycat256.cipherclient.utils.Utils;
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.ClassNode;
@@ -75,7 +76,7 @@ public abstract class Transformer implements Opcodes {
     }
 
     private boolean areEquals(Transform transform, MethodNode mn) {
-        String name = MCP || transform.obfuscatedName().isEmpty() ? transform.methodName() : transform.obfuscatedName();
+        String name = Mappings.getMethodName(klass, transform.methodName(), transform.args());
         if (!mn.name.equals(name)) {
             return false;
         }

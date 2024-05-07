@@ -34,7 +34,7 @@ public class EntityRendererTransformer extends Transformer {
     /**
      * Replace the method's body by a call to {@link EntityRendererTransformer#getMouseOverTransformed(float)}
      */
-    @Transform(methodName = "getMouseOver", obfuscatedName = "func_78473_a", args = {float.class})
+    @Transform(methodName = "getMouseOver", args = {float.class})
     private void getMouseOver(MethodNode mn) {
         mn.instructions.clear();
         mn.instructions.add(new VarInsnNode(FLOAD, 1));
