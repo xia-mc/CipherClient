@@ -15,18 +15,17 @@ import java.util.Map;
 
 public class ReflectUtils {
 
-    private static final Map<String, Field> fieldCache = new HashMap<>();
-    private static final Map<String, Method> methodCache = new HashMap<>();
+    private static final Map<Class<?>, Map<String, Field>> fieldCache = new HashMap<>();
+    private static final Map<Class<?>, Map<String, Method>> methodCache = new HashMap<>();
 
 
     public static Field getField(Class<?> klass, String fieldName) {
-        String key = klass.getName() + "." + fieldName;
-        if (fieldCache.containsKey(key)) {
-            return fieldCache.get(key);
+        if (fieldCache.containsKey(klass) && fieldCache.get(klass).containsKey(fieldName)) {
+            return fieldCache.get(klass).get(fieldName);
         }
         fieldName = Mappings.getFieldName(klass, fieldName);
         Field field = ReflectionHelper.findField(klass, fieldName);
-        fieldCache.put(key, field);
+        fieldCache.computeIfAbsent(klass, k -> new HashMap<>()).put(fieldName, field);
         return field;
     }
 
@@ -35,12 +34,11 @@ public class ReflectUtils {
             parameterTypes = new Class[0];
         }
         methodName = Mappings.getMethodName(klass, methodName, parameterTypes);
-        String key = klass.getName() + "." + Mappings.getMethodSig(methodName, parameterTypes);
-        if (methodCache.containsKey(key)) {
-            return methodCache.get(key);
+        if (methodCache.containsKey(klass) && methodCache.get(klass).containsKey(methodName)) {
+            return methodCache.get(klass).get(methodName);
         }
         Method method = ReflectionHelper.findMethod(klass, null, new String[]{methodName}, parameterTypes);
-        methodCache.put(key, method);
+        methodCache.computeIfAbsent(klass, k -> new HashMap<>()).put(methodName, method);
         return method;
     }
 
