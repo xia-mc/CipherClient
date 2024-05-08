@@ -75,6 +75,8 @@ public class Rotations {
             mc.thePlayer.renderYawOffset = rotationYaw;
             mc.thePlayer.rotationYawHead = rotationYaw;
             mc.thePlayer.prevRotationYawHead = rotationYaw;
+            mc.thePlayer.prevDistanceWalkedModified = 0;
+            mc.thePlayer.distanceWalkedModified = 0;
 
             lastPitch = mc.thePlayer.rotationPitch;
             lastPrevPitch = mc.thePlayer.prevRotationPitch;
