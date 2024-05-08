@@ -32,6 +32,7 @@ public class TransformManager {
         add(new EntityRendererTransformer());
         add(new EntityClientPlayerMPTransformer());
         add(new CollisionsTransformer());
+        add(new EntityTransformer());
 
     }
 

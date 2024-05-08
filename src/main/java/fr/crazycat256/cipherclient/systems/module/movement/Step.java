@@ -5,7 +5,7 @@
 
 package fr.crazycat256.cipherclient.systems.module.movement;
 
-import cpw.mods.fml.common.gameevent.TickEvent;
+import fr.crazycat256.cipherclient.events.custom.EntityMoveEvent;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.events.Handler;
 import fr.crazycat256.cipherclient.gui.settings.DoubleSetting;
@@ -28,8 +28,11 @@ public class Step extends Module {
     );
 
     @Handler
-    private void onTick(TickEvent.ClientTickEvent event) {
-        mc.thePlayer.stepHeight = height.get().floatValue();
+    private void onEntityMove(EntityMoveEvent event) {
+        // Using EntityMoveEvent instead of TickEvent is necessary because some mods update the player's step height every tick
+        if (mc.thePlayer == event.entity) {
+            mc.thePlayer.stepHeight = height.get().floatValue();
+        }
     }
 
 
