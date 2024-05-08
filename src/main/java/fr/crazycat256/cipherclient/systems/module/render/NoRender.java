@@ -13,7 +13,6 @@ import fr.crazycat256.cipherclient.gui.settings.Setting;
 import fr.crazycat256.cipherclient.systems.module.Category;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 
 public class NoRender extends Module {
@@ -57,14 +56,6 @@ public class NoRender extends Module {
         .build()
     );
 
-    private final Setting<Boolean> portalOverlay = addSetting(new BoolSetting.Builder()
-        .name("portal-overlay")
-        .description("Disables portal overlay rendering")
-        .defaultValue(false)
-        .build()
-    );
-
-
 
     @Handler
     private void onTick(TickEvent.ClientTickEvent event) {
@@ -106,12 +97,4 @@ public class NoRender extends Module {
             }
         }
     }
-
-    @Handler
-    private void onRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
-        if (portalOverlay.get() && event.type == RenderGameOverlayEvent.ElementType.PORTAL) {
-            event.setCanceled(true);
-        }
-    }
-
 }

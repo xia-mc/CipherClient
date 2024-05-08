@@ -36,6 +36,7 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
 
         // Player
         add(new AntiFire());
+        add(new AntiPortal());
         add(new AntiPotion());
         add(new AutoFeed());
         add(new AutoTool());
