@@ -21,8 +21,12 @@ import static fr.crazycat256.cipherclient.CipherClient.mc;
 public class PacketHandler extends ChannelDuplexHandler {
 
     public PacketHandler() {
-        ChannelPipeline pipeline = mc.getNetHandler().getNetworkManager().channel().pipeline();
-        pipeline.addBefore("packet_handler", "PacketHandler", this);
+        try {
+            ChannelPipeline pipeline = mc.getNetHandler().getNetworkManager().channel().pipeline();
+            pipeline.addBefore("packet_handler", "PacketHandler", this);
+        } catch (NullPointerException e) {
+            // Empty catch block
+        }
     }
 
     @Override
