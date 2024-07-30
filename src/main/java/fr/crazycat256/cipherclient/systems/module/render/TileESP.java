@@ -113,7 +113,7 @@ public class TileESP extends Module {
 
         ArrayList<Vec3> alereadyRenderedChests = new ArrayList<>();
 
-        for (TileEntity tile: WorldUtils.getLoadedTileEntityList()) {
+        for (TileEntity tile : WorldUtils.getLoadedTileEntityList()) {
 
             Vec3 tilePos = Vec3.createVectorHelper(tile.xCoord, tile.yCoord, tile.zCoord);
             if (mc.thePlayer.getPosition(1F).distanceTo(tilePos) > maxRange.get()) continue;

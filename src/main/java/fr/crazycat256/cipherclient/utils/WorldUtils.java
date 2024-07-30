@@ -62,8 +62,19 @@ public class WorldUtils {
         List<TileEntity> tileEntities = new ArrayList<>();
         for (Chunk chunk : chunks) {
             if (chunk != null) {
+
+                chunkTilesLoop:
                 for (Object o : chunk.chunkTileEntityMap.values()) {
                     if (o instanceof TileEntity) {
+
+                        TileEntity tileEntity = (TileEntity) o;
+
+                        for (TileEntity tile : tileEntities) {
+                            if (tile.xCoord == tileEntity.xCoord && tile.yCoord == tileEntity.yCoord && tile.zCoord == tileEntity.zCoord) {
+                                continue chunkTilesLoop;
+                            }
+                        }
+
                         tileEntities.add((TileEntity) o);
                     }
                 }
