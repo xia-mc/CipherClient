@@ -68,9 +68,11 @@ repositories {
 
 dependencies {
     // This must not be used if the client is injected
-    implementation ('net.bytebuddy:byte-buddy-agent:1.14.13') {
+    implementation ('net.bytebuddy:byte-buddy-agent:1.14.18') {
         exclude group: 'org.ow2.asm'
     }
+
+    injectorImplementation 'net.bytebuddy:byte-buddy-agent:1.14.18'
 }
 
 tasks.register('genInjectorResources', JavaExec) {
@@ -106,10 +108,6 @@ tasks.register('injectorJar', ShadowJar) {
 configurations {
     injectorImplementation
     injectorResolvableImplementation.extendsFrom injectorImplementation
-}
-
-dependencies {
-    injectorImplementation 'net.bytebuddy:byte-buddy-agent:1.14.13'
 }
 
 tasks.build.finalizedBy('genInjectorResources', 'injectorJar')
