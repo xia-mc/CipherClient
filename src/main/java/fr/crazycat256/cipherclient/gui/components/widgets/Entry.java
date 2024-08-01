@@ -9,7 +9,7 @@ import fr.crazycat256.cipherclient.utils.GLUtils;
 
 /**
  * This will be a widget that allows the user to input text.
- * But actually, it's just a label with a border around it
+ * But currently, it's just a label with a border around it
  * @param <T> The type of the value that this entry will hold
  */
 public abstract class Entry<T> extends InputWidget<T> {
