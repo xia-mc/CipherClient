@@ -5,8 +5,9 @@
 ---
 
 ## Usage
+Just double-click on it or run:
 ```shell
-java -jar cipher-client-x.x-injector.jar <pid>
+java -jar cipher-client-x.x-injector.jar inject <pid>
 ```
 
 ## Build

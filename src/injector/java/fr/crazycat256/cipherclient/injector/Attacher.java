@@ -16,20 +16,8 @@ import java.io.File;
  */
 public class Attacher {
 
-    public static void main(String[] args) {
+    public static void attach(long pid) {
         try {
-            if (args.length != 1) {
-                System.err.println("Usage: java -jar cipher-client-injector.jar <pid>");
-                System.exit(1);
-            }
-
-            long pid;
-            try {
-                pid = Long.parseLong(args[0]);
-            } catch (NumberFormatException e) {
-                System.err.println("Failed to parse PID");
-                return;
-            }
 
             String selfJarPath = Attacher.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
             File selfJar = new File(selfJarPath);

@@ -97,7 +97,7 @@ tasks.register('injectorJar', ShadowJar) {
     configurations = [project.configurations.injectorResolvableImplementation]
     manifest {
         attributes (
-            'Main-Class': 'fr.crazycat256.cipherclient.injector.Attacher',
+            'Main-Class': 'fr.crazycat256.cipherclient.injector.Main',
             'Agent-Class': 'fr.crazycat256.cipherclient.injector.Agent',
             'Can-Redefine-Classes': true,
             'Can-Retransform-Classes': true
