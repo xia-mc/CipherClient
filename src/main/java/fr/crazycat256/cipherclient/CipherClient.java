@@ -21,7 +21,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.lang.instrument.Instrumentation;
 
-@Mod(modid = "cipher-client", name = "CipherClient", version = "0.1", acceptableRemoteVersions = "*")
+@Mod(modid = "cipher-client", name = "CipherClient", version = "1.0", acceptableRemoteVersions = "*")
 public class CipherClient {
 
     public static final String NAME = "CipherClient";
