@@ -87,7 +87,7 @@ tasks.register('genInjectorResources', JavaExec) {
     dependsOn jar
     main = 'fr.crazycat256.cipherclient.converter.Converter'
     classpath = sourceSets.converter.runtimeClasspath
-    args = ['build/libs/cipher-client-0.1.jar', 'src/injector/resources/cipher-client.bin']
+    args = ['build/libs/cipher-client-' + version + '.jar', 'src/injector/resources/cipher-client.bin']
 }
 
 tasks.register('injectorJar', ShadowJar) {
