@@ -17,6 +17,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.Vec3;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/Nuker.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class Nuker extends Module {
 
     public Nuker() {

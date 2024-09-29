@@ -11,6 +11,10 @@ import fr.crazycat256.cipherclient.events.Handler;
 import fr.crazycat256.cipherclient.systems.module.Category;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/AntiFire.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class AntiFire extends Module {
 
     public AntiFire() {

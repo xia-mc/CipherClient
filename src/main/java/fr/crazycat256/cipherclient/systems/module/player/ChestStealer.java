@@ -20,6 +20,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/ChestStealer.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class ChestStealer extends Module {
 
     private int ticks = 0;

@@ -16,6 +16,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/BlockOverlay.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class BlockOverlay extends Module {
 
     public BlockOverlay() {

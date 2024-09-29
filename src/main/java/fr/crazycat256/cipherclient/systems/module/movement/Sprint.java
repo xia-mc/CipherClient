@@ -10,6 +10,10 @@ import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.events.Handler;
 import fr.crazycat256.cipherclient.systems.module.Category;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/Sprint.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class Sprint extends Module {
 
     public Sprint() {

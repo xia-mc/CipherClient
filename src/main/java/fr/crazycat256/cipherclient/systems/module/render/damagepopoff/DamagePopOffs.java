@@ -14,7 +14,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.entity.living.LivingEvent;
 
 /**
- * Copied from <a href="https://github.com/radioegor146/ehacks-lite-3.6.1/blob/master/java/ehacks/mod/modulesystem/classes/DamagePopOffs.java">ehacks-lite</a>
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/DamagePopOffs.java">ehacks-pro</a>
  */
 public class DamagePopOffs extends Module {
 

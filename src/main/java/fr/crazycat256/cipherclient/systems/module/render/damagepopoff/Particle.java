@@ -19,7 +19,7 @@ import org.lwjgl.opengl.GL11;
 import static fr.crazycat256.cipherclient.CipherClient.mc;
 
 /**
- * Copied from <a href="https://github.com/radioegor146/ehacks-lite-3.6.1/blob/master/java/ehacks/mod/util/damageindicator/Particle.java">ehacks-lite</a>
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/util/damageindicator/Particle.java">ehacks-pro</a>
  */
 @SideOnly(value = Side.CLIENT)
 public class Particle extends EntityFX {

@@ -13,6 +13,10 @@ import net.minecraft.block.Block;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.MouseEvent;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/FakeDestroy.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class FakeDestroy extends Module {
 
     public FakeDestroy() {

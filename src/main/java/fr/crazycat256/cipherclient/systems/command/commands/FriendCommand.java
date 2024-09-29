@@ -14,7 +14,7 @@ import java.util.List;
 import net.minecraft.client.gui.GuiPlayerInfo;
 
 /**
- * Copied from <a href="https://github.com/radioegor146/ehacks-lite-3.6.1/blob/master/java/ehacks/mod/commands/classes/FriendsCommand.java">ehacks-lite</a>
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/commands/classes/FriendsCommand.java">ehacks-pro</a>
  * @author radioegor146
  */
 public class FriendCommand extends Command {

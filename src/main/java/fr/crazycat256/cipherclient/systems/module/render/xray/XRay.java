@@ -25,6 +25,10 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/XRay.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class XRay extends Module {
 
     private int displayListId = 0;

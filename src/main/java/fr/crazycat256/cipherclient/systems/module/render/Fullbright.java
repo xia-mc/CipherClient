@@ -12,6 +12,10 @@ import fr.crazycat256.cipherclient.systems.module.Category;
 
 import java.util.Arrays;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/Fullbright.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class Fullbright extends Module {
 
     public Fullbright() {

@@ -18,7 +18,7 @@ import java.util.HashMap;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * Original: <a href="https://github.com/superblaubeere27/ClientBase/blob/master/src/main/java/net/superblaubeere27/clientbase/utils/fontRenderer/GlyphPage.java">ClientBase</a>
+ * Copied from <a href="https://github.com/superblaubeere27/ClientBase/blob/master/src/main/java/net/superblaubeere27/clientbase/utils/fontRenderer/GlyphPage.java">ClientBase</a>
  */
 @SuppressWarnings("unused")
 public class GlyphPage {

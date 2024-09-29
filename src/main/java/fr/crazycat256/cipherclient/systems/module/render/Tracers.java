@@ -25,6 +25,10 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/Tracers.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class Tracers extends Module {
 
     public Tracers() {
@@ -83,7 +87,6 @@ public class Tracers extends Module {
                 Entity entity = (Entity) o;
 
                 if (entity.isDead) continue;
-                if (entity.isInvisible()) continue;
 
                 if (!players.get() && entity instanceof EntityPlayer) continue;
                 if (!hostile.get() && entity instanceof EntityMob) continue;

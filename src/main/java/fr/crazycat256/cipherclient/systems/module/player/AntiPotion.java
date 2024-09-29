@@ -12,6 +12,10 @@ import fr.crazycat256.cipherclient.systems.module.Category;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.potion.Potion;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/AntiPotion.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class AntiPotion extends Module {
 
     private final Potion[] badEffects = new Potion[]{Potion.moveSlowdown, Potion.digSlowdown, Potion.harm, Potion.confusion, Potion.blindness, Potion.hunger, Potion.weakness, Potion.poison, Potion.wither};

@@ -16,7 +16,7 @@ import java.util.TreeMap;
 import static fr.crazycat256.cipherclient.systems.command.CommandProcessor.format;
 
 /**
- * Copied from <a href="https://github.com/radioegor146/ehacks-lite-3.6.1/blob/master/java/ehacks/mod/commands/classes/HelpCommand.java">ehacks-lite</a>
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/commands/classes/HelpCommand.java">ehacks-pro</a>
  * @author radioegor146
  */
 public class HelpCommand extends Command {

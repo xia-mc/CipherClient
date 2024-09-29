@@ -12,9 +12,6 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Copied from <a href="https://github.com/xtrm-en/delta-client-v3/blob/main/src/main/java/me/xtrm/delta/client/utils/Fonts.java">Delta Client</a>
- */
 public class Fonts {
 
 	private static Font font;

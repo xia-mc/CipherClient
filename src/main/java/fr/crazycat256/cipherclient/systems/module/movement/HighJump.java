@@ -14,6 +14,10 @@ import fr.crazycat256.cipherclient.systems.module.Category;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/HighJump.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class HighJump extends Module {
 
     public HighJump() {

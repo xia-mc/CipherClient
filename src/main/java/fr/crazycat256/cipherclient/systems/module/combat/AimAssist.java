@@ -18,6 +18,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/AimAssist.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class AimAssist extends Module {
 
     private EntityPlayer currentTarget;

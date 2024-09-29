@@ -26,6 +26,10 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/ShowArmor.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class ShowArmor extends Module {
 
     public ShowArmor() {

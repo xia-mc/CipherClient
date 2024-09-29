@@ -9,6 +9,10 @@ import com.google.gson.JsonObject;
 import fr.crazycat256.cipherclient.systems.ISerializable;
 import java.util.ArrayList;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/gui/xraysettings/XRayBlock.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class XRayBlock implements ISerializable<JsonObject> {
 
     public static ArrayList<XRayBlock> blocks = new ArrayList<>();

@@ -8,6 +8,10 @@ package fr.crazycat256.cipherclient.converter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/jar-to-dll/blob/master/header-converter-src/HeaderConverter.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 class ClassFile implements Comparable<ClassFile> {
     private String name;
     private String superClass;

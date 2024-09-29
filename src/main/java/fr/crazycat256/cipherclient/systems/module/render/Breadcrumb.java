@@ -15,6 +15,10 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/Breadcrumb.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class Breadcrumb extends Module {
 
     private final CopyOnWriteArrayList<double[]> positionsList = new CopyOnWriteArrayList<>();

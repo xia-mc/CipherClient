@@ -98,7 +98,6 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
 
         // World
         add(new AirPlace());
-        add(new AutoMlg());
         add(new DeathCoords());
         add(new FakeDestroy());
         add(new FastBreak());

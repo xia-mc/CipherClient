@@ -9,6 +9,10 @@ import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.utils.EntityFakePlayer;
 import fr.crazycat256.cipherclient.systems.module.Category;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/FreezeCam.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class FreezeCam extends Module {
 
     public FreezeCam() {

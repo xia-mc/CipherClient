@@ -12,6 +12,10 @@ import fr.crazycat256.cipherclient.systems.module.Category;
 import fr.crazycat256.cipherclient.utils.ReflectUtils;
 import net.minecraft.entity.Entity;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/NoWeb.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class NoWeb extends Module {
 
     public NoWeb() {

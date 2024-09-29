@@ -12,6 +12,10 @@ import fr.crazycat256.cipherclient.utils.EntityFakePlayer;
 import fr.crazycat256.cipherclient.systems.module.Category;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
+/**
+ * Copied from <a href="https://github.com/radioegor146/ehacks-pro/blob/master/src/main/java/ehacks/mod/modulesystem/classes/vanilla/Blink.java">ehacks-pro</a>
+ * @author radioegor146
+ */
 public class Blink extends Module {
 
     public EntityFakePlayer freecamEnt = null;
