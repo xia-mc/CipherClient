@@ -118,7 +118,11 @@ public class Gui {
         githubLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                openLink("https://github.com/crazycat256/CipherClient");
+                try {
+                    Desktop.getDesktop().browse(new URI("https://github.com/crazycat256/CipherClient"));
+                } catch (IOException | URISyntaxException e2) {
+                    throw new RuntimeException(e2);
+                }
             }
         });
         githubPanel.add(githubLabel);
@@ -158,7 +162,7 @@ public class Gui {
 
     private void success(String message) {
         outputLabel.setText(message);
-        outputLabel.setForeground(Color.GREEN);
+        outputLabel.setForeground(new Color(0, 192, 0));
         outputLabel.getParent().setVisible(true);
     }
 
