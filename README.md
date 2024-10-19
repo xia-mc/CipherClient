@@ -28,6 +28,7 @@ The build should be located in `build/libs`
 - [radioegor146](https://github.com/radioegor146) for [ehacks-pro](https://github.com/radioegor146/ehacks-pro) and [jar-to-dll](https://github.com/radioegor146/jar-to-dll)
 - [MeteorDevelopment](https://github.com/MeteorDevelopment) for [meteor-client](https://github.com/MeteorDevelopment/meteor-client)
 - [VazkiiMods](https://github.com/VazkiiMods) for [Neat](https://github.com/VazkiiMods/Neat/tree/c5961631ddcdb02a95f262e910ddd7b46c168278)
+- [superblaubeere27](https://github.com/superblaubeere27) for [ClientBase](https://github.com/superblaubeere27/ClientBase)
 - [MinecraftForge](https://github.com/MinecraftForge) for the mappings
 
 ## Licensing
