@@ -76,6 +76,7 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
         add(new Nametags());
         add(new NoRender());
         add(new Projectiles());
+        add(new SpawnerDelay());
         add(new TileESP());
         add(new Tracers());
         add(new XRay());
@@ -115,6 +116,7 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
         add(new DrawerPeek());
         add(new MiddleClickFriend());
         add(new NBTTooltip());
+        add(new NBTViewer());
         add(new NEITweaks());
         add(new Notifier());
         add(new ShowArmor());
