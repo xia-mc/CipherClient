@@ -6,6 +6,8 @@
 package fr.crazycat256.cipherclient.systems.module.movement;
 
 import cpw.mods.fml.common.gameevent.TickEvent;
+import fr.crazycat256.cipherclient.gui.clickgui.ClientGuiScreen;
+import fr.crazycat256.cipherclient.gui.settings.BoolSetting;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.systems.command.ConsoleInputGui;
 import fr.crazycat256.cipherclient.events.Handler;
@@ -28,7 +30,7 @@ public class GuiMove extends Module {
     }
 
     private final Setting<Double> rotationSpeed = addSetting(new DoubleSetting.Builder()
-        .name("sotation-speed")
+        .name("rotation-speed")
         .description("The speed of rotation in GUIs")
         .min(0.0)
         .max(10.0)
@@ -36,18 +38,36 @@ public class GuiMove extends Module {
         .build()
     );
 
-    private boolean screen;
+    private final Setting<Boolean> serverSideGui = addSetting(new BoolSetting.Builder()
+        .name("server-side-gui")
+        .description("Whether to move in server-side GUIs")
+        .defaultValue(false)
+        .build()
+    );
+
+
+    private boolean prevTickInScreen;
     long t = System.currentTimeMillis();
 
     @Handler
     private void onTick(TickEvent.ClientTickEvent event) {
         GuiScreen currentScreen = mc.currentScreen;
-        if (currentScreen != null && !(currentScreen instanceof GuiChat || currentScreen instanceof ConsoleInputGui || currentScreen instanceof GuiEditSign || currentScreen instanceof GuiCommandBlock)) {
-            screen = true;
+        if (currentScreen != null) {
+            if (!serverSideGui.get() && !(currentScreen instanceof ClientGuiScreen)) {
+                return;
+            }
+            if (currentScreen instanceof GuiChat ||
+                currentScreen instanceof ConsoleInputGui ||
+                currentScreen instanceof GuiEditSign ||
+                currentScreen instanceof GuiCommandBlock) {
+                return;
+            }
+
+            prevTickInScreen = true;
             update();
         }
-        if(currentScreen == null && screen) {
-            screen = false;
+        else if (prevTickInScreen) {
+            prevTickInScreen = false;
             update();
         }
     }
@@ -58,7 +78,16 @@ public class GuiMove extends Module {
         t = System.currentTimeMillis();
 
         GuiScreen currentScreen = mc.currentScreen;
-        if(currentScreen != null && !(currentScreen instanceof GuiChat || currentScreen instanceof ConsoleInputGui || currentScreen instanceof GuiEditSign || currentScreen instanceof GuiCommandBlock)) {
+
+        if (!serverSideGui.get() && !(currentScreen instanceof ClientGuiScreen)) {
+            return;
+        }
+        
+        if (currentScreen != null && !(
+            currentScreen instanceof GuiChat ||
+            currentScreen instanceof ConsoleInputGui ||
+            currentScreen instanceof GuiEditSign ||
+            currentScreen instanceof GuiCommandBlock)) {
 
             if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) mc.thePlayer.rotationPitch += factor;
             if (Keyboard.isKeyDown(Keyboard.KEY_UP)) mc.thePlayer.rotationPitch -= factor;
