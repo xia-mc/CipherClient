@@ -6,6 +6,7 @@
 package fr.crazycat256.cipherclient.systems.module.render;
 
 import cpw.mods.fml.common.gameevent.TickEvent;
+import fr.crazycat256.cipherclient.events.custom.UpdateMoveStateEvent;
 import fr.crazycat256.cipherclient.gui.settings.BoolSetting;
 import fr.crazycat256.cipherclient.gui.settings.EnumSetting;
 import fr.crazycat256.cipherclient.systems.module.Module;
@@ -15,8 +16,8 @@ import fr.crazycat256.cipherclient.gui.settings.DoubleSetting;
 import fr.crazycat256.cipherclient.gui.settings.Setting;
 import fr.crazycat256.cipherclient.utils.*;
 import fr.crazycat256.cipherclient.systems.module.Category;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderHandEvent;
@@ -77,7 +78,6 @@ public class Freecam extends Module {
 
     private EntityFakePlayer fakePlayer = null;
     private long lastTickTime;
-    private Vec3 pos = Vec3.createVectorHelper(0, 0, 0);
     private float yaw, pitch;
     private float camYaw, camPitch;
 
@@ -116,6 +116,10 @@ public class Freecam extends Module {
     private void onTick(TickEvent.ClientTickEvent event) {
         mc.gameSettings.thirdPersonView = 0;
 
+        if (mode.get() == Mode.CAMERA) {
+            return;
+        }
+
         Vec3 move = PlayerUtils.getMovementVec3(mc.renderViewEntity);
         move.xCoord *= horizontalSpeed.get();
         move.yCoord *= verticalSpeed.get();
@@ -124,6 +128,21 @@ public class Freecam extends Module {
             move = MathUtils.multiply(move, 1.5);
         }
         mc.thePlayer.setVelocity(move.xCoord, move.yCoord, move.zCoord);
+    }
+
+    @Handler
+    private void onMoveState(UpdateMoveStateEvent event) {
+        if (mode.get() == Mode.CAMERA) {
+            mc.thePlayer.rotationYaw = ReflectUtils.get(EntityClientPlayerMP.class, mc.thePlayer, "oldRotationYaw");
+            mc.thePlayer.rotationPitch = ReflectUtils.get(EntityClientPlayerMP.class, mc.thePlayer, "oldRotationPitch");
+            ReflectUtils.setPressed(mc.gameSettings.keyBindForward, false);
+            ReflectUtils.setPressed(mc.gameSettings.keyBindBack, false);
+            ReflectUtils.setPressed(mc.gameSettings.keyBindLeft, false);
+            ReflectUtils.setPressed(mc.gameSettings.keyBindRight, false);
+            ReflectUtils.setPressed(mc.gameSettings.keyBindJump, false);
+            ReflectUtils.setPressed(mc.gameSettings.keyBindSneak, false);
+            ReflectUtils.setPressed(mc.gameSettings.keyBindSprint, false);
+        }
     }
 
     @Handler
@@ -170,17 +189,6 @@ public class Freecam extends Module {
 
         PlayerUtils.setPos(mc.renderViewEntity, newPos);
         PlayerUtils.setLook(mc.renderViewEntity, camYaw, camPitch);
-
-        mc.thePlayer.setPosition(pos.xCoord, pos.yCoord, pos.zCoord);
-        mc.thePlayer.setVelocity(0, 0, 0);
-
-        ReflectUtils.setPressed(mc.gameSettings.keyBindForward, false);
-        ReflectUtils.setPressed(mc.gameSettings.keyBindBack, false);
-        ReflectUtils.setPressed(mc.gameSettings.keyBindLeft, false);
-        ReflectUtils.setPressed(mc.gameSettings.keyBindRight, false);
-        ReflectUtils.setPressed(mc.gameSettings.keyBindJump, false);
-        ReflectUtils.setPressed(mc.gameSettings.keyBindSneak, false);
-        ReflectUtils.setPressed(mc.gameSettings.keyBindSprint, false);
     }
 
     @Handler
@@ -192,13 +200,21 @@ public class Freecam extends Module {
 
     @Handler
     private void onPacketSend(PacketEvent.Send event) {
-        if (event.packet instanceof C03PacketPlayer) {
-            event.setCanceled(true);
-        }
-        if (mode.get() == Mode.CAMERA && event.packet instanceof C0BPacketEntityAction) {
-            C0BPacketEntityAction packet = (C0BPacketEntityAction) event.packet;
-            if (packet.func_149513_d() == 1 || packet.func_149513_d() == 4) {
-                event.setCanceled(true);
+        if (event.packet instanceof C03PacketPlayer && mode.get() == Mode.PLAYER) {
+            C03PacketPlayer packet = (C03PacketPlayer) event.packet;
+
+            ReflectUtils.set(C03PacketPlayer.class, packet, "field_149474_g", this.fakePlayer.onGround);
+
+            if (event.packet instanceof C03PacketPlayer.C04PacketPlayerPosition || event.packet instanceof C03PacketPlayer.C06PacketPlayerPosLook) {
+                ReflectUtils.set(C03PacketPlayer.class, packet, "field_149479_a", this.fakePlayer.posX);
+                ReflectUtils.set(C03PacketPlayer.class, packet, "field_149477_b", this.fakePlayer.posY - 1.62);
+                ReflectUtils.set(C03PacketPlayer.class, packet, "field_149475_d", this.fakePlayer.posY);
+                ReflectUtils.set(C03PacketPlayer.class, packet, "field_149478_c", this.fakePlayer.posZ);
+            }
+
+            if (event.packet instanceof C03PacketPlayer.C05PacketPlayerLook || event.packet instanceof C03PacketPlayer.C06PacketPlayerPosLook) {
+                ReflectUtils.set(C03PacketPlayer.class, packet, "field_149476_e", this.fakePlayer.rotationYaw);
+                ReflectUtils.set(C03PacketPlayer.class, packet, "field_149473_f", this.fakePlayer.rotationPitch);
             }
         }
     }
@@ -245,9 +261,11 @@ public class Freecam extends Module {
         mc.theWorld.addEntityToWorld(-1, fakePlayer);
         mc.renderViewEntity = fakePlayer;
 
-        pos = mc.thePlayer.getPosition(1F);
         yaw = camYaw = mc.thePlayer.rotationYaw;
         pitch = camPitch = mc.thePlayer.rotationPitch;
+
+        mc.thePlayer.setSprinting(false);
+        mc.thePlayer.setSneaking(false);
     }
 
     private void disableCameraMode() {
