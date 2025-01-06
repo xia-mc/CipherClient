@@ -7,6 +7,7 @@ package fr.crazycat256.cipherclient.systems.module.world;
 
 import cpw.mods.fml.common.gameevent.TickEvent;
 import fr.crazycat256.cipherclient.events.Handler;
+import fr.crazycat256.cipherclient.events.custom.UpdateMoveStateEvent;
 import fr.crazycat256.cipherclient.gui.settings.*;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.systems.module.Category;
@@ -129,10 +130,24 @@ public class Scaffold extends Module {
         .build()
     );
 
+    private boolean cancelSneak;
+
+    @Override
+    public void onEnable() {
+        cancelSneak = false;
+    }
+
+    @Handler
+    private void onMoveState(UpdateMoveStateEvent event) {
+        if (cancelSneak && mc.gameSettings.keyBindSneak.getIsKeyPressed()) {
+            ReflectUtils.setPressed(mc.gameSettings.keyBindSneak, false);
+        }
+    }
 
     @Handler
     private void onTick(TickEvent.ClientTickEvent event) {
 
+        cancelSneak = false;
         int blockSlot = -1;
         int originalSlot = mc.thePlayer.inventory.currentItem;
         if (isPlacable(mc.thePlayer.inventory.getCurrentItem())) {
@@ -154,9 +169,7 @@ public class Scaffold extends Module {
         }
 
         if (onlyOnClick.get() && !mc.gameSettings.keyBindUseItem.getIsKeyPressed()) return;
-        if (mc.gameSettings.keyBindSneak.getIsKeyPressed()) {
-            ReflectUtils.setPressed(mc.gameSettings.keyBindSneak, false);
-        }
+        cancelSneak = true;
 
         Vec3 inputMove = PlayerUtils.getMovementVec3();
         Vec3 playerPos = Vec3.createVectorHelper(mc.thePlayer.posX, mc.thePlayer.posY - 1.62 + mc.thePlayer.ySize, mc.thePlayer.posZ); // Feet position

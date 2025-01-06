@@ -6,6 +6,7 @@
 package fr.crazycat256.cipherclient.systems.module.movement;
 
 import cpw.mods.fml.common.gameevent.TickEvent;
+import fr.crazycat256.cipherclient.events.custom.UpdateMoveStateEvent;
 import fr.crazycat256.cipherclient.gui.settings.BoolSetting;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.systems.module.Modules;
@@ -17,10 +18,8 @@ import fr.crazycat256.cipherclient.systems.module.render.Freecam;
 import fr.crazycat256.cipherclient.utils.PlayerUtils;
 import fr.crazycat256.cipherclient.systems.module.Category;
 import fr.crazycat256.cipherclient.utils.ReflectUtils;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import org.lwjgl.input.Keyboard;
 
 public class Flight extends Module {
@@ -114,9 +113,9 @@ public class Flight extends Module {
     }
 
     @Handler
-    private void onRenderWorldLast(RenderWorldLastEvent event) {
+    private void onMoveState(UpdateMoveStateEvent event) {
         if (mode.get() == Mode.VELOCITY) {
-            ReflectUtils.set(KeyBinding.class, mc.gameSettings.keyBindSneak, "pressed", false);
+            ReflectUtils.setPressed(mc.gameSettings.keyBindSneak, false);
             ReflectUtils.set(EntityLivingBase.class, mc.thePlayer, "jumpTicks", 2);
         }
     }

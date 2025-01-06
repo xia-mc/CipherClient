@@ -6,6 +6,7 @@
 package fr.crazycat256.cipherclient.systems.module.movement;
 
 import cpw.mods.fml.common.gameevent.TickEvent;
+import fr.crazycat256.cipherclient.events.custom.UpdateMoveStateEvent;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import fr.crazycat256.cipherclient.events.Handler;
 import fr.crazycat256.cipherclient.events.custom.PacketEvent;
@@ -50,7 +51,7 @@ public class Sneak extends Module {
     }
 
     @Handler
-    private void onTick(TickEvent.ClientTickEvent event) {
+    private void onMoveState(UpdateMoveStateEvent event) {
         if (mode.get() == Mode.VANILLA) {
             ReflectUtils.setPressed(mc.gameSettings.keyBindSneak, true);
         }
