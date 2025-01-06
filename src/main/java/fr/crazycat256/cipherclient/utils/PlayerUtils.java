@@ -86,6 +86,8 @@ public class PlayerUtils {
         if (mc.gameSettings.keyBindSneak.getIsKeyPressed())
             move = move.addVector(0, -1, 0);
 
+        move = move.normalize();
+
         return move;
     }
 
