@@ -5,14 +5,15 @@
 
 ## Disclaimer ⚠️
 
-Ce mod ne doit pas être utilisé sur un serveur non anarchique. Ce n'est pas un "ghost-client" et il n'est pas conçu pour être indétectable. Toute utilisation vous conduira à un bannissement !
+Ce mod ne doit pas être utilisé sur un serveur non anarchique. Ce n'est pas un "ghost-client" et il n'est pas conçu pour être indétectable. Toute utilisation sur un serveur non-anarchique vous conduira à un bannissement !
 
 ## Origine
 
 Il y a quelque temps, [FuzeIII a annoncé la création de "Palanarchy"](https://www.youtube.com/watch?v=Gqm2eMAcUg8&t=310s), un serveur Minecraft anarchique avec les mods de Paladium. J'ai supposé qu'il y aurait un mod utilitaire par défaut, mais qu'il serait limité et qu'il n'y aurait pas de moyen officiel de modifier le jeu nous-mêmes. C'est pourquoi j'ai décidé de créer ce mod, qui peut s'injecter dans n'importe quelle instance de Forge 1.7.10. Cependant, il s'est avéré que Palanarchy était en réalité en 1.16.5 (et qu'il n'avait qu'une version limitée du palamod, en plus d'être excessivement P2W). Mon mod était donc inutile ! J'ai quand même décidé de le publier comme une PoC, mais je n'encourage en aucun cas son utilisation (car à ma connaissance, il n'y a pas de serveur anarchique en 1.7.10)
 
 ## Usage
-Double cliquez dessus ou exécutez `java -jar cipher-client-1.0-injector.jar inject <pid>`
+1. Téléchargez l'injecteur depuis la page de [dernière version](/../../releases/tag/latest)
+2. Double cliquez dessus ou exécutez `java -jar cipher-client-1.0-injector.jar inject <pid>`
 
 ## Build
 ```shell
