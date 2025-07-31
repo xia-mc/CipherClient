@@ -13,8 +13,11 @@ import fr.crazycat256.cipherclient.gui.settings.IntSetting;
 import fr.crazycat256.cipherclient.gui.settings.Setting;
 import fr.crazycat256.cipherclient.systems.module.Category;
 import fr.crazycat256.cipherclient.systems.module.Module;
+import net.minecraft.item.ItemFood;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 public class NoCooldown extends Module {
     private final Setting<Boolean> force = addSetting(new BoolSetting.Builder()
@@ -38,6 +41,21 @@ public class NoCooldown extends Module {
         .defaultValue(true)
         .build()
     );
+
+    private final Setting<Boolean> onlyWhileAttack = addSetting(new BoolSetting.Builder()
+        .name("only-on-attack")
+        .description("Only remove cooldowns while attacking")
+        .defaultValue(true)
+        .build()
+    );
+
+    private final Setting<Boolean> onlyWhileEat = addSetting(new BoolSetting.Builder()
+        .name("only-on-eat")
+        .description("Only remove cooldowns while eating")
+        .defaultValue(true)
+        .build()
+    );
+
     private boolean isSprinting;
 
     public NoCooldown() {
@@ -46,7 +64,7 @@ public class NoCooldown extends Module {
 
     @Handler
     private void onSendPacket(PacketEvent.Send event) {
-        if ((event.packet instanceof C0BPacketEntityAction)) {
+        if (event.packet instanceof C0BPacketEntityAction) {
             C0BPacketEntityAction actionPacket = (C0BPacketEntityAction) event.packet;
             int action = actionPacket.func_149512_e();
             if (action == 3) {
@@ -55,10 +73,29 @@ public class NoCooldown extends Module {
                 isSprinting = false;
             }
         }
+
+        if (event.packet instanceof C08PacketPlayerBlockPlacement) {
+            C08PacketPlayerBlockPlacement packet = (C08PacketPlayerBlockPlacement) event.packet;
+            if (packet.func_149574_g().getItem() instanceof ItemFood) {
+                if (!onlyWhileEat.get()) return;
+                doRemove();
+            }
+        }
     }
 
     @Handler
     public void onTick(TickEvent.ClientTickEvent event) {
+        if (onlyWhileAttack.get() || onlyWhileEat.get()) return;
+        doRemove();
+    }
+
+    @Handler
+    public void onAttack(AttackEntityEvent event) {
+        if (!onlyWhileAttack.get()) return;
+        doRemove();
+    }
+
+    private void doRemove() {
         if (noHunger.get() && isSprinting) {
             mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, 4));
         }
