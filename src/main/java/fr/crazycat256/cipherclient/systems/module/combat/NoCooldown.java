@@ -14,6 +14,7 @@ import fr.crazycat256.cipherclient.gui.settings.Setting;
 import fr.crazycat256.cipherclient.systems.module.Category;
 import fr.crazycat256.cipherclient.systems.module.Module;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
@@ -84,7 +85,8 @@ public class NoCooldown extends Module {
 
         if (event.packet instanceof C08PacketPlayerBlockPlacement) {
             C08PacketPlayerBlockPlacement packet = (C08PacketPlayerBlockPlacement) event.packet;
-            if (packet.func_149574_g().getItem() instanceof ItemFood) {
+            ItemStack stack = packet.func_149574_g();
+            if (stack != null && stack.getItem() instanceof ItemFood) {
                 if (!onlyWhileEat.get()) return;
                 doRemove();
             }
