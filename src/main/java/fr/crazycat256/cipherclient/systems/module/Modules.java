@@ -60,6 +60,7 @@ public class Modules extends System<Module> implements IPopulable, ISavable {
         add(new KillAura());
         add(new Reach());
         add(new TriggerBot());
+        add(new NoCooldown());
 
 
         // Render

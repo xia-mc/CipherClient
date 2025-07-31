@@ -1,0 +1,74 @@
+/*
+ * This file is part of CipherClient (https://github.com/crazycat256/CipherClient).
+ * Copyright (c) crazycat256.
+ */
+
+package fr.crazycat256.cipherclient.systems.module.combat;
+
+import cpw.mods.fml.common.gameevent.TickEvent;
+import fr.crazycat256.cipherclient.events.Handler;
+import fr.crazycat256.cipherclient.events.custom.PacketEvent;
+import fr.crazycat256.cipherclient.gui.settings.BoolSetting;
+import fr.crazycat256.cipherclient.gui.settings.IntSetting;
+import fr.crazycat256.cipherclient.gui.settings.Setting;
+import fr.crazycat256.cipherclient.systems.module.Category;
+import fr.crazycat256.cipherclient.systems.module.Module;
+import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
+
+public class NoCooldown extends Module {
+    private final Setting<Boolean> force = addSetting(new BoolSetting.Builder()
+        .name("force")
+        .description("Force remove cooldowns")
+        .defaultValue(false)
+        .build()
+    );
+    private final Setting<Integer> speed = addSetting(new IntSetting.Builder()
+        .name("speed")
+        .description("The speed of cooldowns")
+        .defaultValue(3)
+        .min(1)
+        .max(5)
+        .visible(() -> !force.get())
+        .build()
+    );
+    private final Setting<Boolean> noHunger = addSetting(new BoolSetting.Builder()
+        .name("no-hunger")
+        .description("Force remove hunger")
+        .defaultValue(true)
+        .build()
+    );
+    private boolean isSprinting;
+
+    public NoCooldown() {
+        super("NoCooldown", "Remove cooldown of some items", Category.COMBAT);
+    }
+
+    @Handler
+    private void onSendPacket(PacketEvent.Send event) {
+        if ((event.packet instanceof C0BPacketEntityAction)) {
+            C0BPacketEntityAction actionPacket = (C0BPacketEntityAction) event.packet;
+            int action = actionPacket.func_149512_e();
+            if (action == 3) {
+                isSprinting = true;
+            } else if (action == 4) {
+                isSprinting = false;
+            }
+        }
+    }
+
+    @Handler
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if (noHunger.get() && isSprinting) {
+            mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, 4));
+        }
+
+        for (int i = 0; i < (force.get() ? 20 : speed.get() - 1); i++) {
+            mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
+        }
+
+        if (noHunger.get() && isSprinting) {
+            mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, 3));
+        }
+    }
+}
