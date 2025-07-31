@@ -18,6 +18,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import org.lwjgl.input.Mouse;
 
 public class NoCooldown extends Module {
     private final Setting<Boolean> force = addSetting(new BoolSetting.Builder()
@@ -56,6 +57,13 @@ public class NoCooldown extends Module {
         .build()
     );
 
+    private final Setting<Boolean> onlyWhileRightClick = addSetting(new BoolSetting.Builder()
+        .name("only-on-right-click")
+        .description("Only remove cooldowns while right click")
+        .defaultValue(true)
+        .build()
+    );
+
     private boolean isSprinting;
 
     public NoCooldown() {
@@ -85,7 +93,11 @@ public class NoCooldown extends Module {
 
     @Handler
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (onlyWhileAttack.get() || onlyWhileEat.get()) return;
+        if (onlyWhileRightClick.get() && Mouse.isButtonDown(1)) {
+            doRemove();
+        }
+
+        if (onlyWhileAttack.get() || onlyWhileEat.get() || onlyWhileRightClick.get()) return;
         doRemove();
     }
 
